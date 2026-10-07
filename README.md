@@ -61,5 +61,5 @@ You manage everything over SSH with a single command-line script. Planned comman
 - Postgres (`psycopg`, raw SQL)
 - Twilio SMS
 - Anthropic API (Claude Haiku)
-- Docker Compose with Caddy for TLS, on a single VPS
+- A single VPS running Postgres, the app under systemd, and Caddy for TLS (no containers)
 - pip and venv, ruff, pyright, pytest
