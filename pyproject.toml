@@ -9,6 +9,7 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]",
     "psycopg[binary]",
+    "pydantic-settings",
     "python-dotenv",
 ]
 
@@ -17,6 +18,7 @@ dev = [
     "pytest",
     "ruff",
     "pyright",
+    "httpx2",
 ]
 
 [tool.setuptools.packages.find]
@@ -25,12 +27,15 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
+[tool.fastapi]
+entrypoint = "sayd.main:app"
+
 [tool.ruff]
 line-length = 100
 src = ["src", "tests"]
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B"]
+select = ["E", "F", "I", "UP", "B", "N"]
 
 [tool.pyright]
 include = ["src", "tests", "manage.py"]
