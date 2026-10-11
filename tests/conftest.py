@@ -20,3 +20,20 @@ def db() -> Iterator[psycopg.Connection]:
         conn.execute("create schema public")
         conn.commit()
         yield conn
+
+
+@pytest.fixture
+def tags_table_and_connection(db: psycopg.Connection) -> psycopg.Connection:
+    """A tags table seeded with: anxious, work, Rest (stored mixed case on purpose)."""
+    db.execute(
+        """
+        CREATE TABLE tags (
+            tag_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            tag_name TEXT NOT NULL
+        )
+        """
+    )
+    db.execute("CREATE UNIQUE INDEX tags_tag_name_key ON tags (lower(tag_name))")
+    for name in ("anxious", "work", "Rest"):
+        db.execute("INSERT INTO tags (tag_name) VALUES (%s)", (name,))
+    return db

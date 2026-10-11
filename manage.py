@@ -9,6 +9,9 @@ MIGRATIONS_DIR = Path(__file__).parent / "migrations"
 
 
 def run_migrate() -> int:
+    """
+    Migration runner which calls the migrate function.
+    """
     with connect() as conn:
         try:
             applied = migrate(conn, MIGRATIONS_DIR)
@@ -28,7 +31,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(prog="manage.py", description="Sayd author commands")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("migrate", help="apply pending database migrations")
-
+    commands.add_parser("add_quote", help="add new quote to database")
+    commands.add_parser("delete_quote", help="delete a quote from the database")
     args = parser.parse_args()
     if args.command == "migrate":
         return run_migrate()
