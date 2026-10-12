@@ -37,7 +37,7 @@ def find_missing_tags(conn: psycopg.Connection, tag_names: list[str]) -> list[st
     missing_tags = []
     seen = set()
 
-    for tag in tag_names:
+    for tag in tag_names: # had to do this to keep the casing the same instead of using normalized tags
         tag = tag.strip()
         if tag.lower() not in seen and tag.lower() not in fast_lookup_found_tags:
             missing_tags.append(tag)
